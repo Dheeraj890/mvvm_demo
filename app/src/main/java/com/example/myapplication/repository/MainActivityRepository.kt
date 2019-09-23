@@ -2,15 +2,21 @@ package com.example.myapplication.repository
 
 import android.app.Application
 import android.os.AsyncTask
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.MyApplication
 import com.example.myapplication.persistence.AppDatabase
+import com.example.myapplication.persistence.dao.userDao
 import com.example.myapplication.persistence.entity.UserEntity
 
-class MainActivityRepository {
+ class MainActivityRepository {
     private var appDatabase: AppDatabase? = null
-    private var INSTANCE:MainActivityRepository?=null
+
+     var getAllUserEntity=MutableLiveData<List<UserEntity>>()
 
 
+     private constructor()
 
     init {
 
@@ -18,15 +24,23 @@ appDatabase=AppDatabase.getDatabase(MyApplication.instance)
 
 }
 
-fun getInstance():MainActivityRepository{
+     companion object{
+         private var INSTANCE:MainActivityRepository?=null
 
-    if(INSTANCE==null){
 
-        INSTANCE= MainActivityRepository();
-    }
+         fun getInstance():MainActivityRepository{
 
-    return INSTANCE as MainActivityRepository
-}
+             if(INSTANCE==null){
+
+                 INSTANCE= MainActivityRepository();
+             }
+
+             return INSTANCE as MainActivityRepository
+         }
+
+
+     }
+
 
 
 
@@ -34,18 +48,39 @@ fun getInstance():MainActivityRepository{
     fun insertUser(userEntity: UserEntity){
 
 
-        appDatabase?.let { addUser(it).execute(userEntity) }
+
+        addUser(appDatabase).execute(userEntity)
+
+    }
+
+
+    fun getAllUser(): LiveData<List<UserEntity>> {
+
+var list=appDatabase!!.userDao().getAll()
+
+        getAllUserEntity.value=list
+
+        return getAllUserEntity
 
     }
 
 
 
-    private class addUser(private var appDatabase: AppDatabase):
-        AsyncTask<UserEntity, Void, Void>() {
-        override fun doInBackground(vararg params: UserEntity?): Void? {
-            params[0]?.let { appDatabase.userDao().insertAll(it) }
+    private class addUser(private var appDatabase: AppDatabase?):
+        AsyncTask<UserEntity, Void, UserEntity>() {
+        override fun doInBackground(vararg params: UserEntity): UserEntity? {
+         var i=  appDatabase!!.userDao().insertAll(params[0])
 
-            return null
+            return params[0]
+
+        }
+
+
+        override fun onPostExecute(result: UserEntity?) {
+            super.onPostExecute(result)
+
+
+            Toast.makeText(MyApplication.instance,"Success "+result?.firstName,Toast.LENGTH_SHORT).show()
 
         }
 

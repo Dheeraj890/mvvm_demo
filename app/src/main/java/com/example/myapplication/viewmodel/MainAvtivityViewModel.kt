@@ -2,32 +2,62 @@ package com.example.myapplication.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.myapplication.model.User
+import com.example.myapplication.persistence.entity.UserEntity
+import com.example.myapplication.repository.MainActivityRepository
 
-class MainAvtivityViewModel(application: Application): AndroidViewModel(application) {
+class MainAvtivityViewModel(): ViewModel() {
 
 
-    private  var userData:MutableLiveData<User>?=null
+    private  var userData:MutableLiveData<List<UserEntity>>?=null
 
 
-    fun getUser(): MutableLiveData<User> {
+    private lateinit var  repository:MainActivityRepository
+
+
+
+
+    init {
+
+        repository=MainActivityRepository.getInstance()
+
+    }
+
+    fun getUser(): MutableLiveData<List<UserEntity>> {
 
         if (userData==null){
 
             userData=MutableLiveData()
         }
 
-        return userData as MutableLiveData<User>
+        return userData as MutableLiveData<List<UserEntity>>
     }
+
+
 
 
 
     fun saveUserData(name:String,password:String){
 
-        var user=User(name,password)
+//        var user=User(name,password)
+//
+//        userData!!.value=user
 
-        userData!!.value=user
+
+        repository.insertUser(UserEntity(name,password))
+
+    }
+
+
+
+    fun getAllUsers() {
+
+
+        userData!!.value=repository.getAllUser().value
+
 
     }
 
