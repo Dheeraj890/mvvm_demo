@@ -5,24 +5,29 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.MyApplication
 import com.example.myapplication.model.User
 import com.example.myapplication.persistence.entity.UserEntity
 import com.example.myapplication.repository.MainActivityRepository
+import javax.inject.Inject
 
-class MainAvtivityViewModel(): ViewModel() {
+class MainAvtivityViewModel(application: MyApplication): AndroidViewModel(application) {
 
 
     private  var userData:MutableLiveData<List<UserEntity>>?=null
 
 
+    @Inject
     private lateinit var  repository:MainActivityRepository
+
 
 
 
 
     init {
 
-        repository=MainActivityRepository.getInstance()
+       // repository=MainActivityRepository.getInstance()
+        application.applicationComponent.inject(this)
 
     }
 

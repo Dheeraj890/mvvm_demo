@@ -9,14 +9,17 @@ import com.example.myapplication.MyApplication
 import com.example.myapplication.persistence.AppDatabase
 import com.example.myapplication.persistence.dao.userDao
 import com.example.myapplication.persistence.entity.UserEntity
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
  class MainActivityRepository {
     private var appDatabase: AppDatabase? = null
 
      var getAllUserEntity=MutableLiveData<List<UserEntity>>()
 
-
-     private constructor()
+     @Inject
+      constructor()
 
     init {
 
