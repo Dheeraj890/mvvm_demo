@@ -14,16 +14,19 @@ import javax.inject.Singleton
 
 @Singleton
  class MainActivityRepository {
-    private var appDatabase: AppDatabase? = null
+    @Inject
+    lateinit var appDatabase: AppDatabase
 
      var getAllUserEntity=MutableLiveData<List<UserEntity>>()
+
+
 
      @Inject
       constructor()
 
     init {
 
-appDatabase=AppDatabase.getDatabase(MyApplication.instance)
+//appDatabase=AppDatabase.getDatabase(MyApplication.instance)
 
 }
 
