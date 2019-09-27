@@ -1,21 +1,25 @@
 package com.example.myapplication.dagger
 
 import android.app.Application
+import com.example.myapplication.MyApplication
 import dagger.Module
 import javax.inject.Singleton
 import dagger.Provides
 
 
 @Module
-class AppModule {
+class AppModule(var application: Application) {
 
 
-   lateinit var mApplication: Application
+    var applicationInst: Application
 
+    init {
+        applicationInst = application
+    }
 
     fun AppModule(application: Application) {
 
-        mApplication = application
+        applicationInst = application
 
     }
 
@@ -26,7 +30,7 @@ class AppModule {
 
             Application {
 
-        return mApplication
+        return applicationInst
 
     }
 

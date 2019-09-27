@@ -15,10 +15,10 @@ class RoomModule {
 private lateinit var appDatabase:AppDatabase
 
 
-    fun RoomModule(mApplication: Application) {
+    constructor(mApplication: Application) {
 
         appDatabase =
-            Room.databaseBuilder(mApplication, AppDatabase::class.java!!, "user-db").build()
+            Room.databaseBuilder(mApplication, AppDatabase::class.java!!, "user_db").allowMainThreadQueries().build()
 
     }
 

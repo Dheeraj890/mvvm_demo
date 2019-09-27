@@ -5,9 +5,10 @@ import dagger.Component
 import android.app.Application
 import com.example.myapplication.persistence.AppDatabase
 import com.example.myapplication.persistence.dao.userDao
+import javax.inject.Singleton
 
-
-@Component(modules = [RepositaryModule::class])
+@Singleton
+@Component(modules = [RepositaryModule::class,AppModule::class,RoomModule::class])
 interface ApplicationComponent {
 
 

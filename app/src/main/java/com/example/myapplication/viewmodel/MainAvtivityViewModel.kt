@@ -11,14 +11,19 @@ import com.example.myapplication.persistence.entity.UserEntity
 import com.example.myapplication.repository.MainActivityRepository
 import javax.inject.Inject
 
-class MainAvtivityViewModel(application: MyApplication): AndroidViewModel(application) {
+class MainAvtivityViewModel(): ViewModel() {
 
 
     private  var userData:MutableLiveData<List<UserEntity>>?=null
 
 
     @Inject
-    private lateinit var  repository:MainActivityRepository
+    lateinit var application:Application
+
+    @Inject
+     lateinit var  repository:MainActivityRepository
+
+    private lateinit var init_dagger:Any
 
 
 
@@ -27,7 +32,8 @@ class MainAvtivityViewModel(application: MyApplication): AndroidViewModel(applic
     init {
 
        // repository=MainActivityRepository.getInstance()
-        application.applicationComponent.inject(this)
+       init_dagger= MyApplication.instance.applicationComponent.inject(this)
+
 
     }
 
