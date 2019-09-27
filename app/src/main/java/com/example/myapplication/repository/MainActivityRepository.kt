@@ -17,6 +17,9 @@ import javax.inject.Singleton
     @Inject
     lateinit var appDatabase: AppDatabase
 
+    @Inject
+    lateinit var userdao: userDao
+
      var getAllUserEntity=MutableLiveData<List<UserEntity>>()
 
 
@@ -55,14 +58,14 @@ import javax.inject.Singleton
 
 
 
-        addUser(appDatabase).execute(userEntity)
+        addUser(userdao).execute(userEntity)
 
     }
 
 
     fun getAllUser(): LiveData<List<UserEntity>> {
 
-var list=appDatabase!!.userDao().getAll()
+var list=userdao!!.getAll()
 
         getAllUserEntity.value=list
 
@@ -72,10 +75,10 @@ var list=appDatabase!!.userDao().getAll()
 
 
 
-    private class addUser(private var appDatabase: AppDatabase?):
+    private class addUser(private var user: userDao?):
         AsyncTask<UserEntity, Void, UserEntity>() {
         override fun doInBackground(vararg params: UserEntity): UserEntity? {
-         var i=  appDatabase!!.userDao().insertAll(params[0])
+         var i=  user!!.insertAll(params[0])
 
             return params[0]
 
