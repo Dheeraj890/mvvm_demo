@@ -72,6 +72,8 @@ class MainAvtivityViewModel(): ViewModel() {
 
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+    }
 
 }

@@ -8,11 +8,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.example.myapplication.R
 import com.example.myapplication.model.User
 import com.example.myapplication.persistence.entity.UserEntity
 import com.example.myapplication.viewmodel.MainAvtivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Context.NOTIFICATION_SERVICE
+import androidx.core.content.ContextCompat.getSystemService
+import android.app.NotificationManager
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.myapplication.R
+
 
 class MainActivity : AppCompatActivity() {
 

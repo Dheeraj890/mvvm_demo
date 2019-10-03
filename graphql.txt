@@ -1,0 +1,13 @@
+Graph Ql Api's Point-:
+
+1)Rest Api's are comparitively slow in compare to today demand's for a high speed of data
+ transmission between client and server.
+
+2)Rest Api's download those data also which are of no use for clients,which make api's more heavy and increase the computattion time of server and client.
+
+3)GraphQl Api help us to reduce the data and computation time by getting only that data which is more useful.
+
+4)Graph Ql also reduce the number of api's exposed to client in any application.
+
+5)Eliminate the problem of overfetching and underfetching.
+
