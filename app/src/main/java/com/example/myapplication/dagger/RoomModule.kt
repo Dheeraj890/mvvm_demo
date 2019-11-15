@@ -6,6 +6,7 @@ import dagger.Provides
 import javax.inject.Singleton
 import androidx.room.Room
 import android.app.Application
+import com.example.myapplication.persistence.dao.WordDao
 import com.example.myapplication.persistence.dao.userDao
 
 
@@ -41,6 +42,19 @@ private lateinit var appDatabase:AppDatabase
             userDao {
 
         return database.userDao()
+
+    }
+
+
+
+
+    @Singleton
+    @Provides
+    fun providesWordsDao(database: AppDatabase):
+
+            WordDao {
+
+        return database.wordDao()
 
     }
 
