@@ -1,7 +1,7 @@
 package com.example.myapplication.dagger
 
 import com.example.myapplication.persistence.AppDatabase
-import com.example.myapplication.persistence.entity.UserEntity
+import com.example.myapplication.repository.WordRepository
 import dagger.Module
 import dagger.Provides
 
@@ -12,11 +12,20 @@ class RepositaryModule {
 
 //
 //    @Provides
-//    fun provideUserEntity():UserEntity{
+//    fun provideDatabase():AppDatabase{
 //
 //new UserEntity();
 //
 //    }
+
+
+    @Provides
+    fun provideWordRepository():WordRepository{
+
+        return WordRepository()
+
+
+    }
 
 
 
