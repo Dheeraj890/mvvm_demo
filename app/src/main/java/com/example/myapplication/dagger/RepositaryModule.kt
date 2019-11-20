@@ -1,6 +1,7 @@
 package com.example.myapplication.dagger
 
 import com.example.myapplication.persistence.AppDatabase
+import com.example.myapplication.repository.WordRepository
 import dagger.Module
 import dagger.Provides
 
@@ -16,6 +17,15 @@ class RepositaryModule {
 //
 //
 //    }
+
+
+    @Provides
+    fun provideWordRepository():WordRepository{
+
+        return WordRepository()
+
+
+    }
 
 
 

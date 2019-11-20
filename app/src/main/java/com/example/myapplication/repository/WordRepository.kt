@@ -7,11 +7,8 @@ import androidx.lifecycle.LiveData
 import com.example.myapplication.persistence.dao.WordDao
 import com.example.myapplication.persistence.entity.WordEntity
 import android.os.AsyncTask
-import android.os.AsyncTask.execute
-
-
-
-
+import android.util.Log
+import android.widget.Toast
 
 
 @Singleton
@@ -21,14 +18,19 @@ import android.os.AsyncTask.execute
      var mAllWords: LiveData<List<WordEntity>>? = null
 
     @Inject
-    lateinit var appDatabase: AppDatabase
+   lateinit  var appDatabase: AppDatabase
 
     init {
 
-        mWordDao=appDatabase.wordDao()
+       // if(::appDatabase.isInitialized) {
 
-        mAllWords= mWordDao!!.getAllWords()
 
+            mWordDao = appDatabase?.wordDao()
+
+            mAllWords = mWordDao!!.getAllWords()
+
+
+      //  }
     }
 
 
@@ -41,15 +43,22 @@ import android.os.AsyncTask.execute
 
 
     fun insert(word: WordEntity) {
-        mWordDao?.let { insertAsyncTask(it).execute(word) }
+       // mWordDao?.let { insertAsyncTask(it).execute(word) }
+
+        insertAsyncTask(mWordDao).execute(word)
     }
 
-    private class insertAsyncTask  constructor(private val mAsyncTaskDao: WordDao) :
+    private class insertAsyncTask(private val mAsyncTaskDao: WordDao?) :
         AsyncTask<WordEntity, Void, Void>() {
 
         override fun doInBackground(vararg params: WordEntity): Void? {
-            mAsyncTaskDao.insert(params[0])
+            mAsyncTaskDao?.insert(params[0])
             return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            Log.d("Async insert","On Post")
         }
     }
 
